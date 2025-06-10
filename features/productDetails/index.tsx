@@ -64,7 +64,25 @@ const ProductDetails = (props: Props) => {
     );
   }
   if (isError) {
-    return <Error />;
+    return (
+      <Error
+        message={
+          <>
+            <h2 className="text-5xl font-semibold text-red-600 text-center my-8">
+              Product not found
+            </h2>
+
+            <Link
+              href="/products"
+              className="text-2xl text-center text-primary block hover:underline"
+            >
+              Navigate to products
+            </Link>
+          </>
+        }
+        containerClassname="text-center"
+      />
+    );
   }
   if (!data) return;
 
