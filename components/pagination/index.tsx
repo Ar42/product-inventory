@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+
+import Button from "../Button";
 
 export interface Props {
   lastPage: number;
@@ -167,11 +170,11 @@ const Pagination: React.FC<Props> = ({
       className={`flex items-center justify-center space-x-1 ${containerClassName}`}
     >
       {/* Previous Button */}
-      <button
+      <Button
         onClick={handlePrevious}
         disabled={currentPageNo === 1}
         className={`
-          flex items-center justify-center cursor-pointer w-max px-2 py-1 text-xs rounded-sm border transition-colors
+          flex items-center justify-center cursor-pointer w-max px-1 py-1.5 text-xs rounded-sm border transition-colors
           ${
             currentPageNo === 1
               ? "border-gray-200 text-gray-400 cursor-not-allowed"
@@ -181,40 +184,40 @@ const Pagination: React.FC<Props> = ({
         aria-label="Previous page"
       >
         <ChevronLeft className="w-4 h-4" />
-      </button>
+      </Button>
 
       {/* Page Numbers */}
       {pageNumbers.map((page, index) => {
         if (page === "left-ellipsis") {
           return (
-            <button
+            <Button
               key={`left-ellipsis-${index}`}
               onClick={handleLeftEllipsisClick}
               className="flex items-center justify-center cursor-pointer w-max px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-sm transition-colors"
               aria-label="Show more pages"
             >
               <MoreHorizontal className="w-4 h-4" />
-            </button>
+            </Button>
           );
         }
 
         if (page === "right-ellipsis") {
           return (
-            <button
+            <Button
               key={`right-ellipsis-${index}`}
               onClick={handleRightEllipsisClick}
-              className="flex items-center justify-center cursor-pointer w-max px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 rounded-sm transition-colors"
+              className="flex items-center justify-center cursor-pointer w-max px-2 py-2 text-xs text-gray-500 hover:bg-gray-100 rounded-sm transition-colors"
               aria-label="Show more pages"
             >
               <MoreHorizontal className="w-4 h-4" />
-            </button>
+            </Button>
           );
         }
 
         const isActive = page === currentPageNo;
 
         return (
-          <button
+          <Button
             key={page}
             onClick={() => onPageChange(page as number)}
             className={`
@@ -229,16 +232,16 @@ const Pagination: React.FC<Props> = ({
             aria-current={isActive ? "page" : undefined}
           >
             {page}
-          </button>
+          </Button>
         );
       })}
 
       {/* Next Button */}
-      <button
+      <Button
         onClick={handleNext}
         disabled={currentPageNo === lastPage}
         className={`
-          flex items-center justify-center cursor-pointer w-max px-2 py-1 text-xs rounded-sm border transition-colors
+          flex items-center justify-center cursor-pointer w-max px-1 py-1.5 text-xs rounded-sm border transition-colors
           ${
             currentPageNo === lastPage
               ? "border-gray-200 text-gray-400 cursor-not-allowed"
@@ -248,7 +251,7 @@ const Pagination: React.FC<Props> = ({
         aria-label="Next page"
       >
         <ChevronRight className="w-4 h-4" />
-      </button>
+      </Button>
     </div>
   );
 };

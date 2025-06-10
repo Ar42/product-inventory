@@ -80,7 +80,7 @@ const Filters = (props: Props) => {
             return copyPrev;
           });
         }}
-        placeholder="Select an option..."
+        placeholder="Select an option"
         type="single"
         containerClassName="mb-4"
       />
@@ -107,7 +107,7 @@ const Filters = (props: Props) => {
               return copyPrev;
             });
           }}
-          placeholder="Select an option..."
+          placeholder="Select options"
           type="multi"
         />
       )}

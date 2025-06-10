@@ -22,7 +22,7 @@ const Search = (props: Props) => {
       <Input
         type="text"
         placeholder="Search..."
-        className="w-full px-10 py-1.5 border border-primary"
+        className="w-full px-10 py-1.5 border border-primary placeholder:text-sm"
         value={input}
         onChange={handleInputChange}
       />
