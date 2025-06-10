@@ -5,9 +5,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Spinner from "@/components/Spinner";
+import clsx from "clsx";
+import { Download } from "lucide-react";
 
 import { ProductResponse } from "@/models/Product";
+
+import Error from "@/components/Error";
+import CategoryChip from "@/components/shared/CategoryChip";
+import Breadcrumb from "@/components/Breadcrumb";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 import {
   beautifyText,
@@ -15,10 +22,7 @@ import {
   formatRelativeTime,
   getValidImageUrl,
 } from "@/utils/common";
-import clsx from "clsx";
-import Error from "@/components/Error";
-import CategoryChip from "@/components/shared/CategoryChip";
-import Breadcrumb from "@/components/Breadcrumb";
+import { downloadImage } from "@/utils/download-helpers";
 
 interface Props {
   data: ProductResponse | null;
@@ -47,6 +51,13 @@ const ProductDetails = (props: Props) => {
     }
   }, [data]);
 
+  const handleDownloadImage = async (url: string, filename: string) => {
+    await downloadImage({
+      url,
+      filename,
+    });
+  };
+
   if (isLoading) {
     return (
       <Spinner className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2" />
@@ -67,15 +78,28 @@ const ProductDetails = (props: Props) => {
         containerClassName="mb-10"
       />
       <div className="grid grid-cols-12 justify-between lg:gap-10">
-        <div className="col-span-12 lg:col-span-5">
+        <div className="col-span-12 lg:col-span-5 relative">
           {currentImageUrl && (
-            <Image
-              src={getValidImageUrl(currentImageUrl)}
-              alt={data.title}
-              width={500}
-              height={300}
-              className="mb-14 rounded-lg shadow-md h-72 lg:h-96 object-cover w-full lg:w-9/12 mx-auto"
-            />
+            <>
+              <Image
+                src={getValidImageUrl(currentImageUrl)}
+                alt={data.title}
+                width={500}
+                height={300}
+                className="mb-14 rounded-lg shadow-md h-72 lg:h-96 object-cover w-full mx-auto"
+              />
+              <Button
+                className="absolute top-2 right-2"
+                onClick={() => {
+                  handleDownloadImage(
+                    getValidImageUrl(currentImageUrl),
+                    data.title
+                  );
+                }}
+              >
+                <Download className="text-white" />
+              </Button>
+            </>
           )}
 
           <div className="flex gap-2 justify-center items-center">
@@ -107,10 +131,18 @@ const ProductDetails = (props: Props) => {
             <CategoryChip category={data?.category} containerClassname="mb-2" />
           )}
 
-          <p className="text-base text-black font-medium mt-6 mb-4">
-            Price: {formatPrice(data.price)}
+          <p className="text-lg text-black font-medium mt-6 mb-4">
+            Price:{" "}
+            <span className="font-semibold text-primary">
+              {formatPrice(data.price)}
+            </span>
           </p>
-          <p className="text-base text-black mb-10">{data?.description}</p>
+          <div>
+            <p className="text-lg font-medium border-b border-b-gray-300 pb-1 mb-2">
+              Product summary:
+            </p>
+            <p className="text-base text-black mb-10">{data?.description}</p>
+          </div>
           <p className="text-base text-black">
             Published {formatRelativeTime(data.creationAt)}
           </p>

@@ -17,9 +17,10 @@ const Chip = (props: ChipProps) => {
   return (
     <div
       className={clsx(
-        "w-max px-3 py-1 text-sm font-medium rounded-sm",
+        "w-max px-1.5 py-1 text-xs font-medium rounded-sm",
         {
-          "bg-primary text-white": variant === "default",
+          "bg-primary/40 border border-primary text-white":
+            variant === "default",
           "cursor-pointer": !!onClick,
         },
         className
