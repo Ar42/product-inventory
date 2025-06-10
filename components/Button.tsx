@@ -1,9 +1,27 @@
-import clsx from "clsx";
 import { ButtonHTMLAttributes } from "react";
 
-const Button = (props: ButtonHTMLAttributes<HTMLButtonElement>) => {
+import clsx from "clsx";
+
+type ButtonVariants = "text" | "primary";
+
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariants;
+}
+
+const Button = (props: ButtonProps) => {
+  const { variant = "default", ...restProps } = props;
+
   return (
-    <button {...props} className={clsx("cursor-pointer", props.className)}>
+    <button
+      {...restProps}
+      className={clsx(
+        "cursor-pointer transform transition-all duration-300",
+        {
+          "bg-primary text-white hover:opacity-85": variant === "primary",
+        },
+        props.className
+      )}
+    >
       {props.children}
     </button>
   );

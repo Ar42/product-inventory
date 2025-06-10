@@ -100,7 +100,10 @@ const ProductList = ({ categorySlug, categoryId = "" }: Props) => {
           <Search onSearch={(value) => setSearchValue(value)} />
           <Drawer direction="right">
             <DrawerTrigger asChild>
-              <Button className="bg-primary text-white font-semibold px-8 py-1.5 rounded-sm flex gap-x-2 items-center">
+              <Button
+                className="font-semibold px-8 py-1.5 rounded-sm flex gap-x-2 items-center"
+                variant="primary"
+              >
                 <Filter className="h-5 w-5" />
                 Filters
               </Button>

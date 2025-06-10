@@ -22,7 +22,8 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={reset}
-              className="px-4 py-2 bg-primary text-white rounded-sm hover:opacity-85 transition-opacity"
+              className="px-4 py-2 rounded-sm"
+              variant="primary"
             >
               Try again
             </Button>

@@ -19,8 +19,7 @@ const Chip = (props: ChipProps) => {
       className={clsx(
         "w-max px-1.5 py-1 text-xs font-medium rounded-sm",
         {
-          "bg-primary/40 border border-primary text-white":
-            variant === "default",
+          "border border-primary text-primary": variant === "default",
           "cursor-pointer": !!onClick,
         },
         className
