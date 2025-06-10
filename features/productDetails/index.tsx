@@ -169,7 +169,7 @@ const ProductDetails = (props: Props) => {
       {!!productSlug && !isPreview && (
         <Link
           href={`/products/preview/${productSlug}`}
-          className="text-sm font-bold mx-auto block w-max bg-primary hover:opacity-85 transition-all duration-300 text-white px-4 py-2 mt-10"
+          className="text-sm font-bold mx-auto block w-max bg-primary hover:opacity-85 transition-all duration-300 text-white px-4 py-2 mt-10 rounded-sm"
         >
           Preview
         </Link>
