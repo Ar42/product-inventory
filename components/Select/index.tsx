@@ -17,6 +17,7 @@ export interface SelectProps<V = string> {
   placeholder?: string;
   isLoading?: boolean;
   isSearchable?: boolean;
+  isClearable?: boolean;
   label?: string;
   type?: "single" | "multi";
   onSearch?: (
@@ -33,6 +34,7 @@ const Select = <V = string,>({
   placeholder = "Select...",
   isLoading = false,
   isSearchable = false,
+  isClearable = false,
   label,
   type = "single",
   onSearch,
@@ -67,16 +69,6 @@ const Select = <V = string,>({
         : [...value, optionValue];
       onChange(newValue);
     }
-  };
-
-  const handleOptionRemove = (optionValue: V, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!onChange) return;
-
-    const newValue = value.filter(
-      (v) => JSON.stringify(v) !== JSON.stringify(optionValue)
-    );
-    onChange(newValue);
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -119,33 +111,12 @@ const Select = <V = string,>({
       return <span className="text-gray-500 truncate">{placeholder}</span>;
     }
 
-    if (type === "single") {
-      const selectedOption = selectedOptions[0];
-      return <span className="truncate">{selectedOption?.label}</span>;
-    }
-
-    if (selectedOptions.length === 1) {
-      return (
-        <div className="flex items-center gap-1">
-          <span className="bg-blue-100 text-primary px-2 py-1 rounded text-sm flex items-center gap-1">
-            {selectedOptions[0].label}
-            <Button
-              onClick={(e) => handleOptionRemove(selectedOptions[0].value, e)}
-              className="hover:bg-blue-200 rounded p-0.5"
-            >
-              <X size={12} />
-            </Button>
-          </span>
-        </div>
-      );
-    }
-
     return (
-      <div className="flex items-center gap-1">
-        <span className="bg-blue-100 text-primary px-2 py-1 rounded text-sm">
+      <div className="flex justify-between items-center">
+        <span className="text-primary px-2 py-1 rounded text-sm">
           {selectedOptions.length} selected
         </span>
-        {selectedOptions.length > 0 && (
+        {selectedOptions.length > 0 && isClearable && (
           <Button
             onClick={handleClearAll}
             className="text-gray-400 hover:text-gray-600 p-0.5"

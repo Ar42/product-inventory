@@ -69,20 +69,26 @@ const Filters = (props: Props) => {
           setSelectedPriceRanges(selectedValues);
           setParams((prev) => {
             const copyPrev = { ...prev };
-            if (!!selectedValues.length) {
-              const [min, max] = selectedValues[0].split("-");
-              copyPrev.offset = updateOffset(1);
+
+            if (!selectedValues.length) {
+              delete copyPrev?.price_min;
+              delete copyPrev?.price_max;
+            } else {
+              const [min, max] = selectedValues?.[0].split("-");
               copyPrev.price_min = min;
               copyPrev.price_max = max;
-
-              setCurrentPageNo(1);
             }
+
+            copyPrev.offset = updateOffset(1);
+
+            setCurrentPageNo(1);
             return copyPrev;
           });
         }}
         placeholder="Select an option"
         type="single"
         containerClassName="mb-4"
+        isClearable
       />
 
       {!categorySlug && (
@@ -109,6 +115,7 @@ const Filters = (props: Props) => {
           }}
           placeholder="Select options"
           type="multi"
+          isClearable
         />
       )}
     </section>
